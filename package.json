@@ -1,0 +1,23 @@
+{
+  "name": "fictional-octo-spoon",
+  "version": "1.0.0",
+  "description": "OOP HW",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MorganWoods618/fictional-octo-spoon.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/MorganWoods618/fictional-octo-spoon/issues"
+  },
+  "homepage": "https://github.com/MorganWoods618/fictional-octo-spoon#readme",
+  "dependencies": {
+    "inquirer": "^8.2.4"
+  }
+}
