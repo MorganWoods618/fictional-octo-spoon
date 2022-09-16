@@ -3,8 +3,13 @@ const Engineer = require("./lib/Engineer")
 const Intern = require("./lib/Intern")
 const Manager = require("./lib/Manager")
 const inquirer = require("inquirer")
-
+const fs = require("fs")
+const path = require("path")
+const placeToGo = path.resolve(__dirname, "dist")
+const fileToGoThere = path.join(placeToGo, "index.html")
 const newTeamArray = []
+const generateHTML = require("./src/generatehtml")
+
 
 function prompt () {
     inquirer.prompt([
@@ -36,8 +41,66 @@ function prompt () {
     })
 }
 
-//add engineer prompt here
-//add intern prompt here
+function engineerPrompt () {
+    inquirer.prompt([
+        {
+            type: "input",
+            name: "engineerName",
+            message: "What is the engineer's name?"
+        },
+        {
+            type: "input",
+            name: "id",
+            message: "What is the engineer's ID?"
+        },
+        {
+            type: "input",
+            name: "email",
+            message: "What is the engineer's email?"
+        },
+        {
+            type: "input",
+            name: "github",
+            message: "What is the engineer's Github?"
+        },
+    ]).then(response => {
+        let engineer = new Engineer(response.engineerName, response.id, response.email, response.github)
+        newTeamArray.push(engineer)
+        console.log(newTeamArray)
+        trafficControl()
+    })
+}
+
+function internPrompt () {
+    inquirer.prompt([
+        {
+            type: "input",
+            name: "internName",
+            message: "What is the intern's name?"
+        },
+        {
+            type: "input",
+            name: "id",
+            message: "What is the intern's ID?"
+        },
+        {
+            type: "input",
+            name: "email",
+            message: "What is the intern's email?"
+        },
+        {
+            type: "input",
+            name: "school",
+            message: "Where did the intern go to school?"
+        },
+    ]).then(response => {
+        let intern = new Intern(response.internName, response.id, response.email, response.school)
+        newTeamArray.push(intern)
+        console.log(newTeamArray)
+        trafficControl()
+    })
+}
+
 function trafficControl () {
     inquirer.prompt([
         {
@@ -48,17 +111,21 @@ function trafficControl () {
         }
     ]).then(response =>{
         if (response.newMember==="Yes, Engineer"){
-            //engineer prompt()
+            engineerPrompt()
         }
         else if(response.newMember==="Yes, Intern"){
-            //Intern prompt()
+            internPrompt()
         }
         else if(response.newMember==="Yes, Manager"){
-            //Manager prompt()
+            prompt()
         }
         else {
             //fire build HTML function
+            createTeamCard()
         }
     })
+}
+function createTeamCard () {
+    fs.writeFileSync(fileToGoThere, generateHTML(newTeamArray))
 }
 prompt()
